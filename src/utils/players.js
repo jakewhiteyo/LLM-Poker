@@ -124,41 +124,6 @@ const generateTable = async () => {
     },
   ];
 
-  // const response = await axios.get(
-  //   `https://randomuser.me/api/?results=4&nat=us,gb,fr`
-  // );
-  // response.data.results
-  //   .map((user) => {
-  //     const randomizedChips =
-  //       Math.floor(Math.random() * (20000 - 18000)) + 18000;
-  //     return {
-  //       id: uuid(),
-  //       name: `${user.name.first
-  //         .charAt(0)
-  //         .toUpperCase()}${user.name.first.slice(1)} ${user.name.last
-  //         .charAt(0)
-  //         .toUpperCase()}${user.name.last.slice(1)}`,
-  //       avatarURL: user.picture.large,
-  //       cards: [],
-  //       chips: randomizedChips,
-  //       roundStartChips: randomizedChips,
-  //       roundEndChips: randomizedChips,
-  //       currentRoundChipsInvested: 0,
-  //       showDownHand: {
-  //         hand: [],
-  //         descendingSortHand: [],
-  //       },
-  //       bet: 0,
-  //       betReconciled: false,
-  //       folded: false,
-  //       allIn: false,
-  //       robot: true,
-  //       canRaise: true,
-  //       stackInvestment: 0,
-  //     };
-  //   })
-  //   .forEach((user) => users.push(user));
-
   return users;
 };
 
