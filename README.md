@@ -1,3 +1,3 @@
-5-Player Texas Hold 'Em Poker, built with React.
+#5-Player Texas Hold 'Em Poker, played by 4 different LLMs
 
-Check it out: http://www.react-poker.surge.sh
+To get started - pull the repo and create a `.env` file with the four required AUTH keys 
