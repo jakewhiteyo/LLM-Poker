@@ -42,6 +42,7 @@ import {
 } from "./utils/ui.js";
 
 import { cloneDeep } from "lodash";
+import { queryGemini, queryLLama, queryOpenAi } from "./utils/models.js";
 
 class App extends Component {
   state = {
@@ -231,7 +232,7 @@ class App extends Component {
   handleAI = () => {
     const { playerAnimationSwitchboard, ...appState } = this.state;
     const newState = handleAIUtil(cloneDeep(appState), this.pushAnimationState);
-
+    console.log("newState", newState);
     this.setState(
       {
         ...newState,
@@ -388,6 +389,11 @@ class App extends Component {
       players[activePlayerIndex].chips + players[activePlayerIndex].bet;
     return players[activePlayerIndex].robot || phase === "showdown" ? null : (
       <React.Fragment>
+        <button
+          className="action-button"
+          onClick={() => queryLLama("Respond to this by saying hello")}>
+          Query
+        </button>
         <button
           className="action-button"
           onClick={() => this.handleBetInputSubmit(betInputValue, min, max)}>
