@@ -42,7 +42,8 @@ import {
 } from "./utils/ui.js";
 
 import { cloneDeep } from "lodash";
-import { queryGemini, queryLLama, queryOpenAi } from "./utils/models.js";
+
+import { queryApi } from "./utils/api.js";
 
 class App extends Component {
   state = {
@@ -391,8 +392,13 @@ class App extends Component {
       <React.Fragment>
         <button
           className="action-button"
-          onClick={() => queryLLama("Respond to this by saying hello")}>
-          Query
+          onClick={() =>
+            queryApi(
+              "Respond to this by saying hello. Dont say anything else",
+              "claude"
+            )
+          }>
+          Query Claude
         </button>
         <button
           className="action-button"
