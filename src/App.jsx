@@ -236,22 +236,10 @@ class App extends Component {
     const { playerAnimationSwitchboard, ...appState } = this.state;
     const newState = handleAIUtil(cloneDeep(appState), this.pushAnimationState);
     console.log("newState", newState);
-    this.setState(
-      {
-        ...newState,
-        betInputValue: newState.minBet,
-      },
-      () => {
-        if (
-          this.state.players[this.state.activePlayerIndex].robot &&
-          this.state.phase !== "showdown"
-        ) {
-          setTimeout(() => {
-            this.handleAI();
-          }, 1200);
-        }
-      }
-    );
+    this.setState({
+      ...newState,
+      betInputValue: newState.minBet,
+    });
   };
 
   renderBoard = () => {
@@ -298,16 +286,7 @@ class App extends Component {
 
   runGameLoop = () => {
     const newState = dealPrivateCards(cloneDeep(this.state));
-    this.setState(newState, () => {
-      if (
-        this.state.players[this.state.activePlayerIndex].robot &&
-        this.state.phase !== "showdown"
-      ) {
-        setTimeout(() => {
-          this.handleAI();
-        }, 1200);
-      }
-    });
+    this.setState(newState);
   };
 
   renderRankTie = (rankSnapshot) => {
@@ -390,19 +369,12 @@ class App extends Component {
     );
     const max =
       players[activePlayerIndex].chips + players[activePlayerIndex].bet;
-    return players[activePlayerIndex].robot || phase === "showdown" ? null : (
+    return phase === "showdown" ? null : (
       <React.Fragment>
-        <button
-          className="action-button"
-          onClick={() =>
-            generatePrompt(
-              state,
-              this.state.players[this.state.activePlayerIndex]
-            )
-          }>
-          Query
+        <button className="advance-button" onClick={() => this.handleAI()}>
+          {this.state.players[this.state.activePlayerIndex].name} move
         </button>
-        <button
+        {/* <button
           className="action-button"
           onClick={() => this.handleBetInputSubmit(betInputValue, min, max)}>
           {renderActionButtonText(
@@ -413,7 +385,7 @@ class App extends Component {
         </button>
         <button className="fold-button" onClick={() => this.handleFold()}>
           Fold
-        </button>
+        </button> */}
       </React.Fragment>
     );
   };

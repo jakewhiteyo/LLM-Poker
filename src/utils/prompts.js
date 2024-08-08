@@ -27,7 +27,7 @@ const generatePrompt = (state, player) => {
   prompt += `\n- Check - Because I think {player_number} has a flush and im not confident in my hand`;
   prompt += `\n- Raise 20 - I have a strong hand and want to increase the pot`;
 
-  console.log("prompt", prompt);
+  return prompt;
 };
 
 const phraseCard = (card) => {

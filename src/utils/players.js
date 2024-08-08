@@ -17,27 +17,27 @@ const axios = require("axios");
 // TODO Generate UUID to simulate User ID and really get a perf match on binding to players when determining winnings
 const generateTable = async () => {
   const users = [
-    {
-      id: uuid(),
-      name: "Player 1",
-      avatarURL: "/assets/boy.svg",
-      cards: [],
-      showDownHand: {
-        hand: [],
-        descendingSortHand: [],
-      },
-      chips: 20000,
-      roundStartChips: 20000,
-      roundEndChips: 20000,
-      currentRoundChipsInvested: 0,
-      bet: 0,
-      betReconciled: false,
-      folded: false,
-      allIn: false,
-      canRaise: true,
-      stackInvestment: 0,
-      robot: false,
-    },
+    // {
+    //   id: uuid(),
+    //   name: "Player 1",
+    //   avatarURL: "/assets/boy.svg",
+    //   cards: [],
+    //   showDownHand: {
+    //     hand: [],
+    //     descendingSortHand: [],
+    //   },
+    //   chips: 20000,
+    //   roundStartChips: 20000,
+    //   roundEndChips: 20000,
+    //   currentRoundChipsInvested: 0,
+    //   bet: 0,
+    //   betReconciled: false,
+    //   folded: false,
+    //   allIn: false,
+    //   canRaise: true,
+    //   stackInvestment: 0,
+    //   robot: false,
+    // },
     {
       id: uuid(),
       name: "OpenAI GPT 3.5",
