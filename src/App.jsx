@@ -44,6 +44,7 @@ import {
 import { cloneDeep } from "lodash";
 
 import { queryApi } from "./utils/api.js";
+import { generatePrompt } from "./utils/prompts.js";
 
 class App extends Component {
   state = {
@@ -75,6 +76,7 @@ class App extends Component {
       4: { isAnimating: false, content: null },
       5: { isAnimating: false, content: null },
     },
+    turnNumber: 1,
   };
 
   cardAnimationDelay = 0;
@@ -378,7 +380,7 @@ class App extends Component {
     });
   };
 
-  renderActionButtons = () => {
+  renderActionButtons = (state) => {
     const { highBet, players, activePlayerIndex, phase, betInputValue } =
       this.state;
     const min = determineMinBet(
@@ -393,12 +395,12 @@ class App extends Component {
         <button
           className="action-button"
           onClick={() =>
-            queryApi(
-              "Respond to this by saying hello. Dont say anything else",
-              "claude"
+            generatePrompt(
+              state,
+              this.state.players[this.state.activePlayerIndex]
             )
           }>
-          Query Claude
+          Query
         </button>
         <button
           className="action-button"
@@ -465,7 +467,9 @@ class App extends Component {
         </div>
         {this.state.phase === "showdown" && this.renderShowdown()}
         <div className="game-action-bar">
-          <div className="action-buttons">{this.renderActionButtons()}</div>
+          <div className="action-buttons">
+            {this.renderActionButtons(this.state)}
+          </div>
           <div className="slider-boi">
             {!this.state.loading &&
               renderActionMenu(
