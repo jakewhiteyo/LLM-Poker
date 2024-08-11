@@ -33,6 +33,7 @@ import {
 } from "./utils/bet.js";
 
 import { handleAI as handleAIUtil } from "./utils/ai.js";
+import { handleLLM as handleLLMUtil } from "./utils/llm.js";
 
 import {
   renderShowdownMessages,
@@ -232,6 +233,19 @@ class App extends Component {
     });
   };
 
+  handleLLM = async () => {
+    const { playerAnimationSwitchboard, ...appState } = this.state;
+    const newState = await handleLLMUtil(
+      cloneDeep(appState),
+      this.pushAnimationState
+    );
+    console.log("newState", newState);
+    this.setState({
+      ...newState,
+      betInputValue: newState.minBet,
+    });
+  };
+
   handleAI = () => {
     const { playerAnimationSwitchboard, ...appState } = this.state;
     const newState = handleAIUtil(cloneDeep(appState), this.pushAnimationState);
@@ -371,7 +385,7 @@ class App extends Component {
       players[activePlayerIndex].chips + players[activePlayerIndex].bet;
     return phase === "showdown" ? null : (
       <React.Fragment>
-        <button className="advance-button" onClick={() => this.handleAI()}>
+        <button className="advance-button" onClick={() => this.handleLLM()}>
           {this.state.players[this.state.activePlayerIndex].name} move
         </button>
         {/* <button

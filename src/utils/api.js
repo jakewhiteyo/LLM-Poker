@@ -14,7 +14,7 @@ const queryApi = async (prompt, model) => {
         },
       }
     );
-    console.log("response", response);
+    return response;
   } catch (error) {
     console.error(`API query failed: `, error);
   }
