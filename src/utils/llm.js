@@ -46,6 +46,9 @@ const handleResponse = (response, state) => {
   if (action.startsWith("check")) {
     const betValue = state.minBet;
     return handleBet(state, betValue, min, max);
+  } else if (action.startsWith("call")) {
+    const betValue = state.minBet;
+    return handleBet(state, betValue, min, max);
   } else if (action.startsWith("raise")) {
     const [actionType, amount] = action.split(" ");
     const parsedAmount = parseInt(amount);
