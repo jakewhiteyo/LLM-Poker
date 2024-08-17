@@ -256,6 +256,20 @@ class App extends Component {
     });
   };
 
+  renderChat = () => {
+    const { playActionMessages } = this.state;
+    const messages = playActionMessages.map((message) => {
+      return (
+        <div className="chat-message">
+          <div className="player-text">{message.name}</div>
+          <div className="action-text">{message.action}</div>
+          <div className="reason-text">{message.reason}</div>
+        </div>
+      );
+    });
+    return <div className="chat-box">{messages}</div>;
+  };
+
   renderBoard = () => {
     const {
       players,
@@ -431,43 +445,50 @@ class App extends Component {
   renderGame = () => {
     const { highBet, players, activePlayerIndex, phase } = this.state;
     return (
-      <div className="poker-app--background">
-        <div className="poker-table--container">
-          <img
-            className="poker-table--table-image"
-            src={"./assets/table-nobg-svg-01.svg"}
-            alt="Poker Table"
-          />
-          {this.renderBoard()}
-          <div className="community-card-container">
-            {this.renderCommunityCards()}
+      <>
+        <div className="poker-container">
+          <div className="left-container">
+            <div className="poker-app--background">
+              <div className="poker-table--container">
+                <img
+                  className="poker-table--table-image"
+                  src={"./assets/table-nobg-svg-01.svg"}
+                  alt="Poker Table"
+                />
+                {this.renderBoard()}
+                <div className="community-card-container">
+                  {this.renderCommunityCards()}
+                </div>
+                <div className="pot-container">
+                  <img
+                    style={{ height: 55, width: 55 }}
+                    src={"./assets/pot.svg"}
+                    alt="Pot Value"
+                  />
+                  <h4> {`${this.state.pot}`} </h4>
+                </div>
+              </div>
+              {this.state.phase === "showdown" && this.renderShowdown()}
+              <div className="game-action-bar">
+                <div className="action-buttons">
+                  {this.renderActionButtons(this.state)}
+                </div>
+                <div className="slider-boi">
+                  {!this.state.loading &&
+                    renderActionMenu(
+                      highBet,
+                      players,
+                      activePlayerIndex,
+                      phase,
+                      this.handleBetInputChange
+                    )}
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="pot-container">
-            <img
-              style={{ height: 55, width: 55 }}
-              src={"./assets/pot.svg"}
-              alt="Pot Value"
-            />
-            <h4> {`${this.state.pot}`} </h4>
-          </div>
+          <div className="right-container">{this.renderChat()}</div>
         </div>
-        {this.state.phase === "showdown" && this.renderShowdown()}
-        <div className="game-action-bar">
-          <div className="action-buttons">
-            {this.renderActionButtons(this.state)}
-          </div>
-          <div className="slider-boi">
-            {!this.state.loading &&
-              renderActionMenu(
-                highBet,
-                players,
-                activePlayerIndex,
-                phase,
-                this.handleBetInputChange
-              )}
-          </div>
-        </div>
-      </div>
+      </>
     );
   };
   render() {

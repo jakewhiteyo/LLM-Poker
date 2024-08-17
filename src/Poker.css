@@ -659,3 +659,27 @@ img {
 }
 
 */
+
+.chat-box {
+  padding: 10px;
+}
+.chat-message {
+  padding: 10px;
+  height: fit-content;
+  color: white;
+}
+.player-text {
+  font-size: 20px;
+  font-weight: 600;
+}
+.poker-container {
+  display: flex;
+  height: 100vh;
+}
+.left-container {
+  flex: 0 0 80%;
+}
+.right-container {
+  flex: 0 0 20%;
+  background-color: black;
+}
