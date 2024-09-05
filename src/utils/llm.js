@@ -38,7 +38,7 @@ const handleResponse = (response, state) => {
   const min = determineMinBet(highBet, activePlayer.chips, activePlayer.bet);
   const max = activePlayer.chips + activePlayer.bet;
 
-  const cleanedString = response.replace(/\{.*?\}/g, "");
+  const cleanedString = response.replace(/\{(.*?)\}/g, "$1");
   console.log("cleanedString", cleanedString);
   const [actionRaw, reason] = cleanedString.split("-");
   const action = actionRaw.replace(/[^a-zA-Z0-9 ]/g, "").toLowerCase();

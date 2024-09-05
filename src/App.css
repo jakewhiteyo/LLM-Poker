@@ -1,4 +1,9 @@
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
 }
 .App {
@@ -26,6 +31,21 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.standing-title {
+  font-size: 30px;
+  padding: 20px;
+  font-weight: 800;
+}
+
+.standing {
+  font-size: 20px;
+  padding: 10px;
 }

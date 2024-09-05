@@ -682,4 +682,6 @@ img {
 .right-container {
   flex: 0 0 20%;
   background-color: black;
+  overflow-y: auto;
+  max-height: 100vh;
 }

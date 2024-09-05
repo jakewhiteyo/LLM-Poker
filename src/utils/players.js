@@ -58,6 +58,7 @@ const generateTable = async () => {
       canRaise: true,
       stackInvestment: 0,
       robot: true,
+      wins: 0,
     },
     {
       id: uuid(),
@@ -79,6 +80,7 @@ const generateTable = async () => {
       canRaise: true,
       stackInvestment: 0,
       robot: true,
+      wins: 0,
     },
     {
       id: uuid(),
@@ -100,6 +102,7 @@ const generateTable = async () => {
       canRaise: true,
       stackInvestment: 0,
       robot: true,
+      wins: 0,
     },
     {
       id: uuid(),
@@ -121,6 +124,7 @@ const generateTable = async () => {
       canRaise: true,
       stackInvestment: 0,
       robot: true,
+      wins: 0,
     },
   ];
 
@@ -199,6 +203,7 @@ const determineNextActivePlayer = (state) => {
     state.numPlayersActive - state.numPlayersAllIn === 1;
   if (state.numPlayersActive === 1) {
     console.log("Only one player active, skipping to showdown.");
+    state.players[state.activePlayerIndex].wins += 1;
     return showDown(reconcilePot(dealMissingCommunityCards(state)));
   }
   if (activePlayer.folded) {

@@ -44,9 +44,6 @@ import {
 
 import { cloneDeep } from "lodash";
 
-import { queryApi } from "./utils/api.js";
-import { generatePrompt } from "./utils/prompts.js";
-
 class App extends Component {
   state = {
     loading: true,
@@ -258,7 +255,7 @@ class App extends Component {
 
   renderChat = () => {
     const { playActionMessages } = this.state;
-    const messages = playActionMessages.map((message) => {
+    const messages = playActionMessages.reverse().map((message) => {
       return (
         <div className="chat-message">
           <div className="player-text">{message.name}</div>
@@ -438,6 +435,16 @@ class App extends Component {
           Next Round{" "}
         </button>
         {this.renderBestHands()}
+        <div className="standing-title">Standings</div>
+        <div>
+          {this.state.players
+            .sort((a, b) => b.wins - a.wins)
+            .map((player) => (
+              <div className="standing">
+                {player.name} {player.wins} wins
+              </div>
+            ))}
+        </div>
       </div>
     );
   };
