@@ -40,7 +40,7 @@ const generateTable = async () => {
     // },
     {
       id: uuid(),
-      name: "OpenAI GPT 3.5",
+      name: "OpenAI GPT 4o",
       avatarURL: "/assets/ChatGPT_logo.svg.png",
       cards: [],
       showDownHand: {
@@ -203,7 +203,6 @@ const determineNextActivePlayer = (state) => {
     state.numPlayersActive - state.numPlayersAllIn === 1;
   if (state.numPlayersActive === 1) {
     console.log("Only one player active, skipping to showdown.");
-    state.players[state.activePlayerIndex].wins += 1;
     return showDown(reconcilePot(dealMissingCommunityCards(state)));
   }
   if (activePlayer.folded) {

@@ -5,11 +5,12 @@ import { generatePrompt } from "./prompts";
 const handleLLM = async (state, pushAnimationState) => {
   console.log("state", state);
   const currentPlayer = state.players[state.activePlayerIndex];
+
   const prompt = generatePrompt(state, currentPlayer);
   console.log("prompt", prompt);
   let response;
   switch (currentPlayer.name) {
-    case "OpenAI GPT 3.5":
+    case "OpenAI GPT 4o":
       response = await queryApi(prompt, "gpt");
       break;
     case "Meta LLama 3.1":
@@ -56,7 +57,7 @@ const handleResponse = (response, state) => {
   } else if (action.startsWith("call")) {
     const betValue = state.minBet;
     return handleBet(state, betValue, min, max);
-  } else if (action.startsWith("raise")) {
+  } else if (action.startsWith("raise") || action.startsWith("bet")) {
     const [actionType, amount] = action.split(" ");
     const parsedAmount = parseInt(amount);
 
