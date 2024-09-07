@@ -360,6 +360,7 @@ class App extends Component {
 
     return playerHierarchy.map((rankSnapshot) => {
       const tie = Array.isArray(rankSnapshot);
+
       return tie
         ? this.renderRankTie(rankSnapshot)
         : this.renderRankWinner(rankSnapshot);

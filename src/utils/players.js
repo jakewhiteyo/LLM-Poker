@@ -57,7 +57,7 @@ const generateTable = async () => {
       allIn: false,
       canRaise: true,
       stackInvestment: 0,
-      robot: true,
+      robot: false,
       wins: 0,
     },
     {
@@ -79,7 +79,7 @@ const generateTable = async () => {
       allIn: false,
       canRaise: true,
       stackInvestment: 0,
-      robot: true,
+      robot: false,
       wins: 0,
     },
     {
@@ -101,7 +101,7 @@ const generateTable = async () => {
       allIn: false,
       canRaise: true,
       stackInvestment: 0,
-      robot: true,
+      robot: false,
       wins: 0,
     },
     {
@@ -123,7 +123,7 @@ const generateTable = async () => {
       allIn: false,
       canRaise: true,
       stackInvestment: 0,
-      robot: true,
+      robot: false,
       wins: 0,
     },
   ];
