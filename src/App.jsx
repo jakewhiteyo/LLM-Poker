@@ -75,6 +75,9 @@ class App extends Component {
       5: { isAnimating: false, content: null },
     },
     turnNumber: 1,
+    autoTurn: true,
+    roundNumber: 1,
+    going: false,
   };
 
   cardAnimationDelay = 0;
@@ -230,17 +233,53 @@ class App extends Component {
     });
   };
 
+  startPoker = () => {
+    this.setState(
+      {
+        going: true,
+      },
+      () => {
+        this.handleLLM();
+      }
+    );
+  };
+
+  stopPoker = () => {
+    this.setState({
+      going: false,
+    });
+  };
+
   handleLLM = async () => {
+    console.log("this.state", this.state);
+    if (!this.state.going) return;
     const { playerAnimationSwitchboard, ...appState } = this.state;
     const newState = await handleLLMUtil(
       cloneDeep(appState),
       this.pushAnimationState
     );
     console.log("newState", newState);
-    this.setState({
-      ...newState,
-      betInputValue: newState.minBet,
-    });
+    this.setState(
+      {
+        ...newState,
+        betInputValue: newState.minBet,
+        going: true,
+      },
+      () => {
+        if (this.state.autoTurn && this.state.phase !== "showdown") {
+          setTimeout(() => {
+            this.handleLLM();
+          }, 1200);
+        } else if (
+          this.state.phase == "showdown" &&
+          this.state.roundNumber % 10 !== 0
+        ) {
+          setTimeout(() => {
+            this.handleNextRound();
+          }, 3000);
+        }
+      }
+    );
   };
 
   handleAI = () => {
@@ -311,7 +350,17 @@ class App extends Component {
 
   runGameLoop = () => {
     const newState = dealPrivateCards(cloneDeep(this.state));
-    this.setState(newState);
+    this.setState(newState, () => {
+      if (
+        this.state.autoTurn &&
+        this.state.going &&
+        this.state.phase !== "showdown"
+      ) {
+        setTimeout(() => {
+          this.handleLLM();
+        }, 1200);
+      }
+    });
   };
 
   renderRankTie = (rankSnapshot) => {
@@ -376,11 +425,10 @@ class App extends Component {
       return;
     }
     this.setState(newState, () => {
-      if (
-        this.state.players[this.state.activePlayerIndex].robot &&
-        this.state.phase !== "showdown"
-      ) {
-        setTimeout(() => this.handleAI(), 1200);
+      if (this.state.autoTurn && this.state.going) {
+        setTimeout(() => {
+          this.handleLLM();
+        }, 1200);
       }
     });
   };
@@ -397,9 +445,21 @@ class App extends Component {
       players[activePlayerIndex].chips + players[activePlayerIndex].bet;
     return phase === "showdown" ? null : (
       <React.Fragment>
-        <button className="advance-button" onClick={() => this.handleLLM()}>
-          {this.state.players[this.state.activePlayerIndex].name} move
-        </button>
+        {!state.autoTurn && (
+          <button className="advance-button" onClick={() => this.handleLLM()}>
+            {this.state.players[this.state.activePlayerIndex].name} move
+          </button>
+        )}
+        {state.autoTurn && !state.going && (
+          <button className="go-button" onClick={() => this.startPoker()}>
+            start
+          </button>
+        )}
+        {state.autoTurn && state.going && (
+          <button className="stop-button" onClick={() => this.stopPoker()}>
+            stop
+          </button>
+        )}
         {/* <button
           className="action-button"
           onClick={() => this.handleBetInputSubmit(betInputValue, min, max)}>
@@ -476,12 +536,14 @@ class App extends Component {
                   <h4> {`${this.state.pot}`} </h4>
                 </div>
               </div>
-              {this.state.phase === "showdown" && this.renderShowdown()}
+              {this.state.phase === "showdown" &&
+                // this.state.roundNumber % 10 == 0 &&
+                this.renderShowdown()}
               <div className="game-action-bar">
                 <div className="action-buttons">
                   {this.renderActionButtons(this.state)}
                 </div>
-                <div className="slider-boi">
+                {/* <div className="slider-boi">
                   {!this.state.loading &&
                     renderActionMenu(
                       highBet,
@@ -490,7 +552,7 @@ class App extends Component {
                       phase,
                       this.handleBetInputChange
                     )}
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

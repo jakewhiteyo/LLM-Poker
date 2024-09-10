@@ -26,7 +26,15 @@ const handleLLM = async (state, pushAnimationState) => {
       throw new Error(`Unrecognized player: ${currentPlayer.name}`);
   }
   console.log("response", response);
-  return handleResponse(response.data, state);
+
+  let allowedAttempts = 3;
+  for (let attempt = 0; attempt < allowedAttempts; attempt++) {
+    try {
+      return handleResponse(response.data, state);
+    } catch (e) {
+      console.log(`Error: ${error.message}`);
+    }
+  }
   // const testResponse =
   //   "Check -  You have a strong hand with Queen's and want to encourage other players to fold while also increasing the pot. ";
   // return handleResponse(testResponse, state);
@@ -51,6 +59,7 @@ const handleResponse = (response, state) => {
       reason: reason,
     },
   ];
+
   if (action.startsWith("check")) {
     const betValue = state.minBet;
     return handleBet(state, betValue, min, max);

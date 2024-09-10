@@ -337,6 +337,7 @@ const filterBrokePlayers = (state, dealerID) => {
 };
 
 const beginNextRound = (state) => {
+  state.roundNumber += 1;
   state.communityCards = [];
   state.sidePots = [];
   state.playerHierarchy = [];
